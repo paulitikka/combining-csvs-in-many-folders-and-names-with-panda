@@ -29,7 +29,6 @@ import glob
 #https://stackoverflow.com/questions/20906474/import-multiple-csv-files-into-pandas-and-concatenate-into-one-dataframe
 path = r'C:\python\all_csvs2\bmj' # use your path
 all_files = glob.glob(path + "/*.csv")
-#%2016 ei toimi..
 
 li = []
 
