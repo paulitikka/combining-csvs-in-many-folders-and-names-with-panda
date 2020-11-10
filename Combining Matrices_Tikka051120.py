@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr 15 13:11:14 2020
+Created on Wed Apr 15 13:11:14 2020 (update: 5.11.20 by Pauli Tikka)
 
 @author: pauli
 """
@@ -22,52 +22,6 @@ Created on Wed Apr 15 13:11:14 2020
 #•	Word count (of peer review) OK
 #•	Link for peer review, available, but not feched/set with all
 #%%Start with frame1
-import pandas as pd #for importing files
-# https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.html
-import numpy as np  #for calculations, array manipulations
-import glob
-#%https://stackoverflow.com/questions/20906474/import-multiple-csv-files-into-pandas-and-concatenate-into-one-dataframe
-path = r'C:\python\all_csvs2\bmj' # use your path
-all_files = glob.glob(path + "/*.csv")
-#%2016 ei toimi..
-
-li = []
-
-for filename in all_files:
-    df = pd.read_csv(filename, index_col=None, header=0)
-    #%
-    li.append(df)
-    #%
-#li[0]=li[0].iloc[:,2:]
-#li[1]=li[1].iloc[:,2:]    
-
-frame = pd.concat(li, axis=0, ignore_index=True)
-#%
-resulta=[]
-#'Attachments', 'Page Count'
-frame['Attachments']='nan'
-frame['Page Count']='nan'
-resulta=['Journal Name','Title of Article', \
-               'Writers of Article', \
-               'Date of Publication',\
-               'Link to Publication', \
-               'Reviewer Name', \
-               'Review Word Count', \
-               'Reviewing Date', \
-               "Reviewer's Title", \
-               "Reviewer's Institution",\
-               'Link to All Reviews',\
-               'Link to PDF of Review','Attachments', 'Page Count']
-frame = frame[resulta]
-frame=frame.set_index([list(range(len(frame1),len(frame)+len(frame1)))])
-#%
-#frame['Reviewer\'s Title'] = frame['Reviewer\'s Title'].astype(str) 
-#frame["Reviewer's Institution"] = frame["Reviewer's Institution"].astype(str) 
-#% If there is still clear mistakes:
-#frame=frame.iloc[frame.index!=213,:]
-#% This is important conversion, you may loose an hour if you do not do it!!
-frame.rename(columns={'Link to PDF of Review':'Link to PDF of Reviewer'}, inplace=True)
-#%%
 import pandas as pd #for importing files
 # https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.html
 import numpy as np  #for calculations, array manipulations
@@ -99,15 +53,51 @@ resulta=['Journal Name','Title of Article', \
                'Link to PDF of Reviewer','Attachments', 'Page Count']
 frame1 = frame1[resulta] 
 frame1=frame1.set_index([list(range(0,len(frame1)))])
-#%%
 #frame1['Reviewer\'s Title'] = frame1['Reviewer\'s Title'].astype(str) 
 #frame1["Reviewer's Institution"] = frame1["Reviewer's Institution"].astype(str) 
+#%%
+import pandas as pd #for importing files
+# https://pandas.pydata.org/pandas-docs/version/0.18.1/generated/pandas.DataFrame.html
+import numpy as np  #for calculations, array manipulations
+import glob
+#%https://stackoverflow.com/questions/20906474/import-multiple-csv-files-into-pandas-and-concatenate-into-one-dataframe
+path = r'C:\python\all_csvs2\bmj' # use your path
+all_files = glob.glob(path + "/*.csv")
+#%2016 ei toimi..
+li = []
+for filename in all_files:
+    df = pd.read_csv(filename, index_col=None, header=0)
+    li.append(df)
+frame = pd.concat(li, axis=0, ignore_index=True)
 #%
+resulta=[]
+#'Attachments', 'Page Count'
+frame['Attachments']='nan'
+frame['Page Count']='nan'
+resulta=['Journal Name','Title of Article', \
+               'Writers of Article', \
+               'Date of Publication',\
+               'Link to Publication', \
+               'Reviewer Name', \
+               'Review Word Count', \
+               'Reviewing Date', \
+               "Reviewer's Title", \
+               "Reviewer's Institution",\
+               'Link to All Reviews',\
+               'Link to PDF of Review','Attachments', 'Page Count']
+frame = frame[resulta]
+frame=frame.set_index([list(range(len(frame1),len(frame)+len(frame1)))])
+#%
+#frame['Reviewer\'s Title'] = frame['Reviewer\'s Title'].astype(str) 
+#frame["Reviewer's Institution"] = frame["Reviewer's Institution"].astype(str) 
+#% If there is still clear mistakes:
+#frame=frame.iloc[frame.index!=213,:]
+#% This is important conversion, you may loose an hour if you do not do it!!
+frame.rename(columns={'Link to PDF of Review':'Link to PDF of Reviewer'}, inplace=True)
+#%%
 path = r'C:\python\all_csvs2\plos' # use your path
 all_files = glob.glob(path + "/*.csv")
-
 li = []
-
 for filename in all_files:
     df = pd.read_csv(filename, index_col=None, header=0)
     li.append(df)
@@ -116,7 +106,6 @@ li[0]["Attachments"]='no' #if something is not available, mark it with 'nan'
 li[0]["Page Count"]='nan' #if something is not available..
 li[0]['Link to PDF of Reviewer']='nan'
 li[1]['Link to PDF of Reviewer']='nan'
-
 #%
 frame2 = pd.concat(li, axis=0, ignore_index=True)
 resulta=[]
@@ -150,8 +139,6 @@ tot_res = pd.concat(totaa, axis=0, ignore_index=True, sort=False)
 #https://stackoverflow.com/questions/50890989/pandas-changing-the-format-of-nan-values-when-saving-to-csv
 #%Curating from older word counts folder:
 #tot_res = pd.read_csv('all_journals_tikka1520.csv')
-#tot_res=tot_res[tot_res['Review Word Count']!=0]
-#tot_res=tot_res[tot_res['Review Word Count']<=5200]
 tot_res=tot_res.replace(np.nan, 'NA', regex=True)
 #%Replacing names
 #https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html
